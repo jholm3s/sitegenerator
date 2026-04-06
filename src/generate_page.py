@@ -2,9 +2,9 @@ import sys
 import os
 from block_markdown import markdown_to_html_node, extract_title
 
-basepath = sys.argv[1] if len(sys.argv) > 1 else '.'
 
-def generate_page(from_path, template_path, dest_path):
+
+def generate_page(from_path, template_path, dest_path, basepath):
     print (f"Generating page from {from_path} to {dest_path} using template {template_path}")
 
     source_md = open(from_path, "r").read()
@@ -15,8 +15,8 @@ def generate_page(from_path, template_path, dest_path):
 
     template_md = template_md.replace("{{ Title }}", source_title)
     template_md = template_md.replace("{{ Content }}", source_HTML_string)
-    template_md = template_md.replace('href="/', 'href="/{basepath}')
-    template_md = template_md.replace('src="/', 'src="/{basepath}')
+    template_md = template_md.replace('href="/', f'href="{basepath}')
+    template_md = template_md.replace('src="/', f'src="{basepath}')
 
 
 

@@ -22,16 +22,16 @@ def copy_static_to_public(src, dst):
             print(f"Creating directory: {dst_path}")
             copy_static_to_public(src_path, dst_path)
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     for item in os.listdir(dir_path_content):
         src_path = os.path.join(dir_path_content, item)
         dest_path = os.path.join(dest_dir_path, item)
         if os.path.isfile(src_path):
             if item.endswith('.md'):
                 dest_path = dest_path.replace('.md', '.html')
-                generate_page(src_path, template_path, dest_path)
+                generate_page(src_path, template_path, dest_path, basepath)
         else:
-            generate_pages_recursive(src_path, template_path, dest_path)
+            generate_pages_recursive(src_path, template_path, dest_path, basepath)
 
 
 
@@ -39,7 +39,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
 def main():
     
     copy_static_to_public('./static', './docs')
-    generate_pages_recursive('./content', 'template.html', basepath)
+    generate_pages_recursive('./content', 'template.html', './docs', basepath)
 
 
 if __name__ == '__main__':
