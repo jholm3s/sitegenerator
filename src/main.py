@@ -1,8 +1,11 @@
+import sys
 from textnode import TextNode, TextType
 from generate_page import generate_page
 
 import os
 import shutil
+
+basepath = sys.argv[1] if len(sys.argv) > 1 else '.'
 
 def copy_static_to_public(src, dst):
     if os.path.exists(dst):
@@ -34,8 +37,9 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
 
 
 def main():
-    copy_static_to_public('./static', './public')
-    generate_pages_recursive('./content', 'template.html', './public')
+    
+    copy_static_to_public('./static', './docs')
+    generate_pages_recursive('./content', 'template.html', basepath)
 
 
 if __name__ == '__main__':
